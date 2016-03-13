@@ -1,0 +1,93 @@
+ <html>
+ <head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='fixed_table.css') }}">
+ </head>
+
+ <body>
+    <div class="container">
+        <div class="page-header">
+        <h1>Explore!</h1>
+        <p class="lead">Here are some hashtags from tweets in the past week that use some of the same keywords as you did</p>
+      </div>
+        
+      <h3>ok</h3>
+<div class="container">
+  <div class="row">
+    {% for t in topic_dict %}
+      <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>{% for r in topic_dict[t] %}{{ r }} {% endfor %}</h4>
+        </div>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-2">keyword</th><th class="col-xs-2">User Name</th><th class="col-xs-6">Tweet</th><th class="col-xs-2">Hashtags</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for r in topic_dict[t] %}
+                {% set new_keyword = 0 %}    
+                
+                {% for s in topic_dict[t][r] %}
+
+                <tr>
+                  <td class="col-xs-2">{% if new_keyword == 0 %} {{ r }} {% endif %}</td><td class="col-xs-2">{{ s[0] }}</td><td class="col-xs-6">{{ s[2] }}</td><td class="col-xs-2">
+                        {% for k in s[3] %}
+                            {{ k['text'] }}
+                        {% endfor %}
+                  </td>
+                </tr>
+                {% set new_keyword = 1 %}
+                {% endfor %}
+            {% endfor %}
+          </tbody>
+        </table>
+        
+{% endfor%} 
+      </div>
+  </div>
+
+</div>
+
+<!--     <div class="container">
+  <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4>
+            Fixed Header Scrolling Table 
+          </h4>
+        </div>
+        {% for t in topic_dict %}
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-2">User Name</th><th class="col-xs-8">Tweet</th><th class="col-xs-2">Hashtags</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for r in topic_dict[t]%}
+            <tr>
+              <td class="col-xs-2">r[0]</td><td class="col-xs-8">r[2]</td><td class="col-xs-2">"ok"</td>
+            </tr>
+            {% endfor%}
+          </tbody>
+        </table>
+        {% endfor %}
+      </div>
+  </div>
+</div> -->
+
+</body>
+</html>
+
+
+
+
+

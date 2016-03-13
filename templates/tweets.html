@@ -1,0 +1,48 @@
+ <html>
+ <head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+
+     <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='grid.css') }}">
+    <!-- <link href="../css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- Custom styles for this template -->
+    <!-- <link href="../css/grid.css" rel="stylesheet"> -->
+ </head>
+ <body>
+    <div class="container">
+        <div class="page-header">
+        <h1>Below are some keywords from your tweets!</h1>
+        <p class="lead">Click "Discover Hashtags" to discover some hashtags based
+            on some of your keywords.</p>
+      </div>
+        
+      <h3>We've extracted {{ topics | count }} topics from your tweets and display the {{ topics[0] | count }} keywords associated with the topic</h3>
+    
+      {% for t in topics %}
+      <p><strong>Topic {{t + 1}}</strong> </p>
+          <div class="list-group">
+                {% for word in topics[t] %}
+                <a href="#" class="list-group-item", d = 'tweet'>{{ word }}</a>
+                {% endfor %}
+          </div>
+      {% endfor %}
+      
+      <form method="post">
+        <button type="submit" class="btn btn-primary btn-lg">Find More Hashtags!</button>
+      </form>
+    </div> <!-- /container -->
+</body>
+</html>
+
+<!-- {% for t in topics %}
+    <div>Topic:</div>
+    {% for r in t[0] %}
+        <div id=’tweet’>{{ r[1] }}</div>
+    {% endfor %}
+{% endfor %}
+<form method="post">
+        <button type="submit">Find More Hashtags!</button>
+</form> -->
