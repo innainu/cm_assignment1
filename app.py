@@ -26,6 +26,7 @@ session = dict()
 db = dict() 
 topics = dict()
 topic_dict = dict()
+movies = []
 
 @app.route("/")
 def send_token():
@@ -95,9 +96,9 @@ def start():
 
 
 
-@app.route("/discoverhashtags", methods=['GET'])
+@app.route("/discoverhashtags", methods=['GET', 'POST'])
 def hashtag_discovery():
-    print "hd", topics
+    # print "hd", topics
 
     if not topic_dict:
         api = db['api']
@@ -108,17 +109,25 @@ def hashtag_discovery():
 
         #get topics
         # topic_dict = {}
+        
         for topic in topics:
             topic_dict[topic] = {}
             for kw in topics[topic]:
-                topic_dict[topic][kw] = get_similar.return_query(api,kw, week_before, today)
+                topic_dict[topic][kw], hashtags = get_similar.return_query(api,kw, week_before, today)
 
-            # topic_dict['topic'+ str(topics.index(topic))].append(get_similar.return_query(api,kw, week_before, today))
-    
-    print "type", type(topic_dict)
-    print "topic_dict2", topic_dict
+        for r in hashtags:
+            movies.append(get_similar.get_movies(r))
+        
+    if request.method == 'POST':
+        return redirect(url_for('get_movies'))
+        
+    # print "type", type(topic_dict)
+    # print "topic_dict2", topic_dict
     return flask.render_template('hashtag_discovery.html', topic_dict = topic_dict)
 
+@app.route("/getmovies", methods=['GET', 'POST'])
+def get_movies():
+    return flask.render_template('movies.html', movies = movies)
 
 if __name__ == "__main__":
     app.run()

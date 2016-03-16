@@ -2,8 +2,7 @@ import sys, unicodedata, gensim
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from gensim import corpora, models, similarities
-import tmdbsimple as tmdb
-tmdb.API_KEY = '9ee5856b7bd983ecdcd57c5ad226e1f6'
+
 
 def remove_punctuation(text):
     #removes punctuation
@@ -42,12 +41,5 @@ def lda_model(corpus, dictionary):
     print len(top_topics)
     return top_topics
 
-def get_movies(top_topics):
-    all_movie_matches = []
-    for tag in top_tags:
-	    search = tmdb.Search()
-	    response = search.movie(query=tag)
-	    for result in search.results:
-	        all_movie_matches.append(result['title'])
-    return all_movie_matches
+
 
