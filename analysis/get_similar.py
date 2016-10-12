@@ -3,9 +3,9 @@
 
 import tweepy
 import tmdbsimple as tmdb
-tmdb.API_KEY = '9ee5856b7bd983ecdcd57c5ad226e1f6'
 
-def get_movies(top_topics):
+def get_movies(top_topics, IMDB_API_KEY):
+    tmdb.API_KEY = IMDB_API_KEY
     all_movie_matches = []
     for tag in top_topics:
         search = tmdb.Search()
@@ -16,7 +16,7 @@ def get_movies(top_topics):
 
 def return_query(api,topic, week_before, today):
     statuses = []
-    for status in tweepy.Cursor(api.search, q = topic ,since=week_before, until=today).items(400):
+    for status in tweepy.Cursor(api.search, q = topic ,since=week_before, until=today).items(20):
         #only append if tweet has a status
         if status._json['entities']['hashtags']:
             statuses.append([status._json['user']['screen_name'],status._json['user']['followers_count'],status._json['text'],status._json['entities']['hashtags']])

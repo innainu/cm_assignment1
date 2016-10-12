@@ -10,6 +10,7 @@ http://www.bootply.com/JnOYtO9xzn
 import flask 
 import tweepy
 import datetime
+import local_config
 from flask import Flask, render_template, redirect
 from flask import request, url_for
 from datetime import date
@@ -18,10 +19,11 @@ app.debug = True
 from analysis import get_topics, get_similar
 
 #config
+CONSUMER_TOKEN = local_config.CONSUMER_TOKEN
+CONSUMER_SECRET = local_config.CONSUMER_SECRET
+CALLBACK_URL = local_config.CALLBACK_URL
+IMDB_API_KEY = local_config.IMDB_API_KEY
 
-CONSUMER_TOKEN="riTWHAuyhvr7BfE4gcehUg83V"
-CONSUMER_SECRET="5Z03juskBxPIuAoD560WOg6GZXzfWNsTAjPsEnHgQ49Aworw16"
-CALLBACK_URL = 'http://localhost:5000/verify'
 session = dict()
 db = dict() 
 topics = dict()
@@ -116,7 +118,7 @@ def hashtag_discovery():
                 topic_dict[topic][kw], hashtags = get_similar.return_query(api,kw, week_before, today)
 
         for r in hashtags:
-            movies.append(get_similar.get_movies(r))
+            movies.append(get_similar.get_movies(r, IMDB_API_KEY))
         
     if request.method == 'POST':
         return redirect(url_for('get_movies'))
