@@ -10,8 +10,12 @@ def get_movies(top_topics, IMDB_API_KEY):
     for tag in top_topics:
         search = tmdb.Search()
         response = search.movie(query=tag)
+        count = 0
         for result in search.results:
-            all_movie_matches.append(result['title'])
+            if count < 5:
+                all_movie_matches.append(result['title'])
+            else:
+                break
     return all_movie_matches
 
 def return_query(api,topic, week_before, today):

@@ -24,6 +24,7 @@ CONSUMER_SECRET = local_config.CONSUMER_SECRET
 CALLBACK_URL = local_config.CALLBACK_URL
 IMDB_API_KEY = local_config.IMDB_API_KEY
 
+
 session = dict()
 db = dict() 
 topics = dict()

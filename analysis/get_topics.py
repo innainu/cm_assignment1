@@ -40,6 +40,3 @@ def lda_model(corpus, dictionary):
     top_topics = model.top_topics(corpus, num_words = 2)
     print len(top_topics)
     return top_topics
-
-
-
